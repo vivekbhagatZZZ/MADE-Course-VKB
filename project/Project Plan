@@ -1,0 +1,35 @@
+# Project Plan
+
+## Title
+
+Uncovering the Drivers of High Drug Prices in the U.S.: A Data-Driven Approach to Healthcare Affordability
+
+## Main Question
+
+How Do The Pharmaceutical Industry’s Pricing Strategy And Other Factors Impact Healthcare Affordability In The United States Of America?
+
+## Description
+
+High drug prices in the U.S. strain many Americans, making healthcare unaffordable for low- and middle-income families. In my project pertaining to the question, “How Do The Pharmaceutical Industry’s Pricing Strategy and Other Factors Impact Healthcare Affordability in the United States of America?” my intention is to analyze the key drivers behind high drug prices and their impact on healthcare costs. 
+
+Using publicly available datasets on drug prices, healthcare spending, and income levels, I intend to explore patterns in pricing strategies, regional cost differences, and the effect of transparency laws on prices. I'll also analyze state policies, insurance roles, and pharmaceutical monopolies to uncover where price escalations happen and how they affect access to necessary medications.
+
+## Datasources
+
+<!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
+
+### Datasource1: ExampleSource
+* Metadata URL: https://mobilithek.info/offers/-6901989592576801458
+* Data URL: https://raw.githubusercontent.com/od-ms/radverkehr-zaehlstellen/main/100035541/2019-01.csv
+* Data Type: CSV
+
+Short description of the DataSource.
+
+## Work Packages
+
+<!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
+
+1. Example Issue [#1][i1]
+2. ...
+
+[i1]: https://github.com/jvalue/made-template/issues/1
