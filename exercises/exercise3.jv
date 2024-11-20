@@ -30,6 +30,8 @@ block FirstCSTableInterpreter oftype TableInterpreter {
     columns: 
     [
       "Country Code" oftype CountryCodeAlpha3,
+      "Economy" oftype text,
+      "GDP per Capita" oftype GDPFormat,
       "Bond Issuance Share" oftype BISFormat
     ];
   }
@@ -63,7 +65,9 @@ block SecondCSTableInterpreter oftype TableInterpreter {
     columns: 
     [
       "Country Code" oftype CountryCodeAlpha3,
-      "GDP per Capita" oftype GDPFormat
+      "Economy" oftype text,
+      "GDP per Capita" oftype GDPFormat,
+      "Bond Issuance Share" oftype BISFormat
     ];
   }
 
