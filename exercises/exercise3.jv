@@ -1,0 +1,107 @@
+pipeline CSPipeline 
+{
+
+  block CSExtractor oftype HttpExtractor {
+    url: "https://thedocs.worldbank.org/en/doc/7d852628d96b9411d43e5d36d5dff941-0050062022/original/Graphs-Chapter-5-02082022.xlsx";
+  }
+
+block CSXLSXInterpreter oftype XLSXInterpreter { }
+
+block FirstCSSheetPicker oftype SheetPicker {
+    sheetName: 'Figure S5.1.2';
+  }
+
+block FirstCSCellNameReWriter oftype CellWriter {
+    at: range P2:S2;
+    write: [
+      "Country Code",
+      "Economy",
+      "GDP per Capita",
+      "Bond Issuance Share",
+    ];
+  }
+
+block FirstCSDataSelector oftype CellRangeSelector {
+   select: range P2:S45;
+ }
+
+block FirstCSTableInterpreter oftype TableInterpreter {
+    header: true;
+    columns: 
+    [
+      "Country Code" oftype CountryCodeAlpha3,
+      "Economy" oftype text,
+      "Bond Issuance Share" oftype BISFormat,
+    ];
+  }
+
+  block FirstCSLoader oftype SQLiteLoader {
+    table: "bondIssuance";
+    file: "./country-stats.sqlite";
+    dropTable: false;
+  }
+
+  block SecondCSSheetPicker oftype SheetPicker {
+    sheetName: 'Figure S5.1.2';
+  }
+
+  block SecondCSCellNameReWriter oftype CellWriter {
+    at: range P2:S2;
+    write: [
+      "Country Code",
+      "Economy",
+      "GDP per Capita",
+      "Bond Issuance Share",
+    ];
+  }
+
+block SecondCSDataSelector oftype CellRangeSelector {
+   select: range P2:S45;
+ }
+
+block SecondCSTableInterpreter oftype TableInterpreter {
+    header: true;
+    columns: 
+    [
+      "Country Code" oftype CountryCodeAlpha3,
+      "Economy" oftype text,
+      "GDP per Capita" oftype GDPFormat,
+    ];
+  }
+
+block SecondCSLoader oftype SQLiteLoader {
+    table: "gdpPerCapita";
+    file: "./country-stats.sqlite";
+    dropTable: false;
+  }
+
+valuetype GDPFormat oftype text {
+    constraints: [
+        gdpFormat
+    ];
+  }
+
+valuetype BISFormat oftype text {
+    constraints: [
+        bisFormat
+    ];
+  }
+
+constraint gdpFormat on text: value matches /^\d+(\.\d+)?$/;
+constraint bisFormat on text: value matches /^(0(\.\d+)?|1(\.0+)?)$/;
+  
+  CSExtractor
+    -> CSXLSXInterpreter
+    -> FirstCSSheetPicker
+    -> FirstCSCellNameReWriter
+    -> FirstCSDataSelector
+    -> FirstCSTableInterpreter
+    -> FirstCSLoader;
+
+  CSXLSXInterpreter 
+    -> SecondCSSheetPicker
+    -> SecondCSCellNameReWriter
+    -> SecondCSDataSelector
+    -> SecondCSTableInterpreter
+    -> SecondCSLoader;
+}
