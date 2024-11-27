@@ -2,12 +2,12 @@
 
 import io
 import os
+import sqlite3
 import zipfile
 import requests
 import pandas as pd
 
-output_folder = "./MADE-Course-VKB/data"
-
+outputFolder = "./data/"
 
 # Download CSV from URL
 csvURL = "https://data.cms.gov/data-api/v1/dataset/87604795-a3e2-4190-9b3a-e39142221fcd/data.csv"
@@ -29,7 +29,7 @@ columnsToKeep = [  "Brnd_Name",
                    "Avg_Spnd_Per_Bene_2022"]
 
 newColumnNames = { "Brnd_Name": "Brand Name", 
-                   "Gnrc_Name" : "Generic Name", 
+                   "Gnrc_Name": "Generic Name", 
                    "Tot_Mftr": "Total Manufacturers", 
                    "Mftr_Name": "Manufacturer Name", 
                    "Tot_Spndng_2022": "Total Spending", 
@@ -53,9 +53,10 @@ filteredDF = DF[DF["Manufacturer Name"].str.contains("Overall", na = False)]
 # Sort The Column "Total Spending" From Large To Small
 sortedDF = filteredDF.sort_values(by='Total Spending', ascending = False)
 
-# Save The Result As An Excel File in 'data' folder
-outputFile1 = os.path.join(output_folder, "Medicare Part D Data.xlsx")
-sortedDF.to_excel(outputFile1, index = False)
+# Save as SQLite database
+sqliteFile1 = os.path.join(outputFolder, "Medicare Part D Data.sqlite")
+with sqlite3.connect(sqliteFile1) as conn:
+    sortedDF.to_sql('Medicare Part D Data', conn, if_exists = 'replace', index = False)
 
 #################################################### SECOND DATASET ############################################################
 
@@ -85,7 +86,7 @@ DF2 = DF2.drop(index=range(0, 4))
 newestColumnNames = ["Year", 
                     "Total Cost", 
                     "Out of Pocket Cost", 
-                    "Total Health Insurance	Coverage" , 
+                    "Total Health Insurance	Coverage", 
                     "Private Health Insurance Coverage", 
                     "Medicare Coverage", 
                     "Medicaid	Coverage", 
@@ -93,5 +94,6 @@ newestColumnNames = ["Year",
                     "Other Third Party Payers Coverage"]
 DF2.columns = newestColumnNames
 
-outputFile2 = os.path.join(output_folder, "Retail Prescription Drugs Expenditure.xlsx")
-DF2.to_excel(outputFile2, index = False)
+sqliteFile2 = os.path.join(outputFolder, "Retail Prescription Drugs Expenditure.sqlite")
+with sqlite3.connect(sqliteFile2) as conn:
+    DF2.to_sql('Retail Prescription Drugs Expenditure', conn, if_exists = 'replace', index = False)
