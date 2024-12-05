@@ -1,0 +1,89 @@
+pipeline TemperaturePipeline 
+{
+  TemperatureExtractor
+    -> TemperatureZipInterpreter
+    -> TemperatureFilePicker
+    -> TemperatureTextFileInterpreter
+    -> TemperatureCSVInterpreter
+    -> RowNameChanger
+    -> TemperatureTableInterpreter
+    -> CelsiusToFahrenheitTransformer4temperature
+    -> CelsiusToFahrenheitTransformer4battery_temperature
+    -> TemperatureLoader;
+
+  block TemperatureExtractor oftype HttpExtractor {
+    url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+  }
+
+  block TemperatureZipInterpreter oftype ArchiveInterpreter {
+    archiveType: "zip";
+  }
+
+  block TemperatureFilePicker oftype FilePicker {
+    path: "./data.csv";
+  }
+
+  block TemperatureTextFileInterpreter oftype TextFileInterpreter {}
+
+  block TemperatureCSVInterpreter oftype CSVInterpreter {
+    delimiter: ";";  
+  }
+
+  block RowNameChanger oftype CellWriter {
+   at: range A1:J1;
+   write: ["id", "producer", "model", "month", "temperature", "", "", "", "", "battery_temperature"];
+ }
+
+  block TemperatureTableInterpreter oftype TableInterpreter {
+    header: true;
+    columns: 
+    [
+      "id" oftype valid_ID, 
+      "producer" oftype text, 
+      "model" oftype text,
+      "month" oftype valid_Month,
+      "temperature" oftype decimal,
+      "battery_temperature" oftype decimal
+    ];
+  }
+
+  transform CelsiusToFahrenheit {
+    from Celsius oftype decimal;
+    to Fahrenheit oftype decimal;
+
+    Fahrenheit: (Celsius * 9/5) + 32;
+  }
+
+  block CelsiusToFahrenheitTransformer4temperature oftype TableTransformer {
+   inputColumns: ['temperature'];
+   outputColumn: 'temperature';
+   uses: CelsiusToFahrenheit;
+  }
+
+  block CelsiusToFahrenheitTransformer4battery_temperature oftype TableTransformer {
+   inputColumns: ['battery_temperature'];
+   outputColumn: 'battery_temperature';
+   uses: CelsiusToFahrenheit;
+  }
+
+  block TemperatureLoader oftype SQLiteLoader {
+    table: "temperatures";
+    file: "temperatures.sqlite";
+  }
+
+  valuetype valid_ID oftype text {
+     constraints: [
+        IDFormat
+    ];
+  }
+
+  valuetype valid_Month oftype text {
+     constraints: [
+        vMFormat
+    ];
+  }
+
+  constraint IDFormat on text: value matches /^[1-9]\d*$/;
+  constraint vMFormat on text: value matches /^(1[0-2]|[1-9])$/;
+
+}
