@@ -31,17 +31,17 @@ pipeline TemperaturePipeline
 
   block RowNameChanger oftype CellWriter {
    at: range A1:J1;
-   write: ["id", "producer", "model", "month", "temperature", " ", " ", " ", " ", "battery_temperature"];
+   write: ["id", "producer", "model", "month", "temperature", "", "", "", "", "battery_temperature"];
  }
 
   block TemperatureTableInterpreter oftype TableInterpreter {
     header: true;
     columns: 
     [
-      "id" oftype integer, 
+      "id" oftype valid_ID, 
       "producer" oftype text, 
       "model" oftype text,
-      "month" oftype integer,
+      "month" oftype valid_Month,
       "temperature" oftype decimal,
       "battery_temperature" oftype decimal
     ];
@@ -82,8 +82,14 @@ pipeline TemperaturePipeline
         vMFormat
     ];
   }
+  
+  constraint IDFormat oftype RangeConstraint {
+    lowerBound: 1;
+  }
 
-  constraint IDFormat on text: value matches /^[1-9]\d*$/;
-  constraint vMFormat on text: value matches /^(1[0-2]|[1-9])$/;
+  constraint vMFormat oftype RangeConstraint {
+    lowerBound: 1;
+    upperBound: 12;
+  }
 
 }
