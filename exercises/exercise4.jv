@@ -38,7 +38,7 @@ pipeline TemperaturePipeline
     header: true;
     columns: 
     [
-      "id" oftype valid_ID, 
+      "id" oftype integer, 
       "producer" oftype text, 
       "model" oftype text,
       "month" oftype integer,
