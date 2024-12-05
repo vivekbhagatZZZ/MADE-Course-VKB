@@ -31,7 +31,7 @@ pipeline TemperaturePipeline
 
   block RowNameChanger oftype CellWriter {
    at: range A1:J1;
-   write: ["id", "producer", "model", "month", "temperature", "", "", "", "", "battery_temperature"];
+   write: ["id", "producer", "model", "month", "temperature", " ", " ", " ", " ", "battery_temperature"];
  }
 
   block TemperatureTableInterpreter oftype TableInterpreter {
@@ -51,7 +51,7 @@ pipeline TemperaturePipeline
     from Celsius oftype decimal;
     to Fahrenheit oftype decimal;
 
-    Fahrenheit: (Celsius * 9/5) + 32;
+    Fahrenheit: ((Celsius * (9/5)) + 32);
   }
 
   block CelsiusToFahrenheitTransformer4temperature oftype TableTransformer {
