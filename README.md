@@ -1,37 +1,20 @@
-# Methods of Advanced Data Engineering Template Project
+# How The Pharmaceutical Industry Impacts Healthcare Affordability in the United States
 
-This template project provides some structure for your open data project in the MADE module at FAU.
-This repository contains (a) a data science project that is developed by the student over the course of the semester, and (b) the exercises that are submitted over the course of the semester.
+## Project Description
 
-To get started, please follow these steps:
-1. Create your own fork of this repository. Feel free to rename the repository right after creation, before you let the teaching instructors know your repository URL. **Do not rename the repository during the semester**.
+This project analyzes the relationship between the pharmaceutical industry's practices and the rising costs of healthcare in the United States, particularly focusing on prescription drug prices. Using publicly available datasets such as the CMS Prescription Drug Utilization and Spending Data and the National Health Expenditures Tables, the project highlights the financial strain on individuals, the inefficiencies of federal insurance programs like Medicare and Medicaid, and the monopolistic behavior in the pharmaceutical sector.
 
-## Project Work
-Your data engineering project will run alongside lectures during the semester. We will ask you to regularly submit project work as milestones, so you can reasonably pace your work. All project work submissions **must** be placed in the `project` folder.
+## Datasets Used
+- **CMS Prescription Drug Utilization and Spending Data**: A dataset centered on prescription drugs used within Medicare, including details on drug types, total spending, and claims.
+- **National Health Expenditures (NHE) Tables**: A broader dataset providing insights into healthcare spending trends, broken down by service type and funding source.
 
-### Exporting a Jupyter Notebook
-Jupyter Notebooks can be exported using `nbconvert` (`pip install nbconvert`). For example, to export the example notebook to HTML: `jupyter nbconvert --to html examples/final-report-example.ipynb --embed-images --output final-report.html`
+## Key Findings
+- Significant increases in out-of-pocket healthcare costs, with a 63.4% rise from 2000 to 2022.
+- A growing disparity between the spending on brand-name drugs (dominated by monopolistic practices) versus the usage of generic alternatives.
+- A 716% increase in federal spending on Medicare and Medicaid between 2000 and 2022, highlighting inefficiencies in the system.
 
+## License
+This project is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License.
 
-## Exercises
-During the semester you will need to complete exercises using [Jayvee](https://github.com/jvalue/jayvee). You **must** place your submission in the `exercises` folder in your repository and name them according to their number from one to five: `exercise<number from 1-5>.jv`.
-
-In regular intervals, exercises will be given as homework to complete during the semester. Details and deadlines will be discussed in the lecture, also see the [course schedule](https://made.uni1.de/).
-
-### Exercise Feedback
-We provide automated exercise feedback using a GitHub action (that is defined in `.github/workflows/exercise-feedback.yml`). 
-
-To view your exercise feedback, navigate to Actions → Exercise Feedback in your repository.
-
-The exercise feedback is executed whenever you make a change in files in the `exercise` folder and push your local changes to the repository on GitHub. To see the feedback, open the latest GitHub Action run, open the `exercise-feedback` job and `Exercise Feedback` step. You should see command line output that contains output like this:
-
-```sh
-Found exercises/exercise1.jv, executing model...
-Found output file airports.sqlite, grading...
-Grading Exercise 1
-	Overall points 17 of 17
-	---
-	By category:
-		Shape: 4 of 4
-		Types: 13 of 13
-```
+## Contributing
+Contributions are welcome! Feel free to fork this repository, make improvements, and submit pull requests.
