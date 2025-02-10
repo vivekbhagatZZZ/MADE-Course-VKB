@@ -14,7 +14,7 @@ This project analyzes the relationship between the pharmaceutical industry's pra
 - A 716% increase in federal spending on Medicare and Medicaid between 2000 and 2022, highlighting inefficiencies in the system.
 
 ## License
-This project is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License.
+This project is licensed under the GNU General Public License v3.0
 
 ## Contributing
 Contributions are welcome! Feel free to fork this repository, make improvements, and submit pull requests.
